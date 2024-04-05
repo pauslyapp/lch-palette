@@ -4,7 +4,8 @@
   --color-bg-secondary: #f0f0f0;
   --color-border: #ddd;
 
-  @media (prefers-color-scheme: dark) {
+  &[data-scheme='dark'] {
+    color-scheme: dark;
     --color-bg: #111;
     --color-text: #fff;
     --color-bg-secondary: #1a1a1a;

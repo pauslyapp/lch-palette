@@ -6,6 +6,7 @@
   background-color: var(--color-bg-secondary);
   height: 2.25rem;
   align-items: center;
+  gap: 0.5rem;
 
   &:hover:not(:disabled) {
     background-color: color-mix(in oklab, var(--color-bg), var(--color-bg-secondary));

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ColorSchemeSwitcher from '$lib/components/ColorSchemeSwitcher.svelte'
   import PaletteViewer from '$lib/components/PaletteViewer.svelte'
   import { Palette } from '$lib/palette/Palette.svelte'
   import { getPaletteContext } from '$lib/palette/context.svelte'
@@ -9,13 +10,8 @@
   const library = $derived(context.library)
   const settings = $derived(context.settings)
 
-  let newColor = $state('')
+  let newColor = $state('#3b82f6')
 </script>
-
-<label class="options">
-  Hex: <input type="checkbox" bind:checked={settings.showInRgb} />
-</label>
-<br />
 
 <div class="actions">
   <form
@@ -27,7 +23,7 @@
     }}
   >
     <input bind:value={newColor} type="color" />
-    <button class="@button" type="submit">Add palette</button>
+    <button class="@button" type="submit">Add palette +</button>
   </form>
   <!-- <button class="@button" onclick={() => library.palettes.push(...createTestPalettes())}
     >Create demo palettes</button
@@ -38,6 +34,13 @@
   <button class="@button" disabled={!library.needsSaving} onclick={() => library.reset()}
     >Reset</button
   >
+
+  <ColorSchemeSwitcher />
+
+  <label class="@button" title="Display all color values in RGB instead of Oklch">
+    <span>RGB</span>
+    <input type="checkbox" bind:checked={settings.showInRgb} />
+  </label>
 </div>
 
 <section class="@section +first">
@@ -47,12 +50,6 @@
 </section>
 
 <style lang="postcss">
-  .options {
-    position: fixed;
-    top: 0rem;
-    right: 0rem;
-    z-index: 10;
-  }
   section {
     margin-top: 3rem;
   }

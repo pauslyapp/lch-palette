@@ -14,10 +14,6 @@
   })
 </script>
 
-<svelte:head>
-  <meta name="color-scheme" content="light dark" />
-</svelte:head>
-
 <main>
   {@render children()}
 </main>
