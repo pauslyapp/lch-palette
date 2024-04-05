@@ -26,8 +26,8 @@ jobs:
         run: pnpm i
 
       - name: build
-        env:
-          BASE_PATH: '/${{ github.event.repository.name }}'
+        # env:
+        #   BASE_PATH: '/${{ github.event.repository.name }}'
         run: |
           pnpm build
 
