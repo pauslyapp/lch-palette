@@ -2,7 +2,7 @@
   import PaletteViewer from '$lib/components/PaletteViewer.svelte'
   import { Palette } from '$lib/palette/Palette.svelte'
   import { getPaletteContext } from '$lib/palette/context.svelte'
-  import { createTestPalettes } from '$lib/palette/test'
+  // import { createTestPalettes } from '$lib/palette/test'
 
   const context = getPaletteContext()
 
@@ -18,16 +18,8 @@
 <br />
 
 <div class="actions">
-  <button class="@button" onclick={() => library.palettes.push(...createTestPalettes())}
-    >Create demo palettes</button
-  >
-  <button class="@button" disabled={!library.needsSaving} onclick={() => library.save()}
-    >Save</button
-  >
-  <button class="@button" disabled={!library.needsSaving} onclick={() => library.reset()}
-    >Reset</button
-  >
   <form
+    class="actions"
     action="#"
     onsubmit={(e) => {
       e.preventDefault()
@@ -37,6 +29,15 @@
     <input bind:value={newColor} type="color" />
     <button class="@button" type="submit">Add palette</button>
   </form>
+  <!-- <button class="@button" onclick={() => library.palettes.push(...createTestPalettes())}
+    >Create demo palettes</button
+  > -->
+  <button class="@button" disabled={!library.needsSaving} onclick={() => library.save()}
+    >Save</button
+  >
+  <button class="@button" disabled={!library.needsSaving} onclick={() => library.reset()}
+    >Reset</button
+  >
 </div>
 
 <section class="@section +first">
@@ -54,5 +55,10 @@
   }
   section {
     margin-top: 3rem;
+  }
+  form {
+    input {
+      height: 100%;
+    }
   }
 </style>

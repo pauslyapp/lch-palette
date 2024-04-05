@@ -1,9 +1,12 @@
 .\@button {
   border: 1px solid #0001;
-  padding: 0.25rem 0.5rem;
-  display: inline-block;
+  padding: 0rem 0.5rem;
+  display: inline-flex;
   border-radius: 0.25rem;
   background-color: #f3f3f3;
+  height: 2.25rem;
+  align-items: center;
+
   &:hover:not(:disabled) {
     background-color: #e3e3e3;
   }
