@@ -1,5 +1,6 @@
 <script lang="ts">
   import PaletteViewer from '$lib/components/PaletteViewer.svelte'
+  import { Palette } from '$lib/palette/Palette.svelte'
   import { getPaletteContext } from '$lib/palette/context.svelte'
   import { createTestPalettes } from '$lib/palette/test'
 
@@ -7,15 +8,36 @@
 
   const library = $derived(context.library)
   const settings = $derived(context.settings)
+
+  let newColor = $state('')
 </script>
 
-<div class="options">
+<label class="options">
   Hex: <input type="checkbox" bind:checked={settings.showInRgb} />
-</div>
+</label>
 <br />
-<button onclick={() => library.palettes.push(...createTestPalettes())}>Create demo palettes</button>
-<button disabled={!library.needsSaving} onclick={() => library.save()}>Save</button>
-<button disabled={!library.needsSaving} onclick={() => library.reset()}>Reset</button>
+
+<div class="actions">
+  <button class="@button" onclick={() => library.palettes.push(...createTestPalettes())}
+    >Create demo palettes</button
+  >
+  <button class="@button" disabled={!library.needsSaving} onclick={() => library.save()}
+    >Save</button
+  >
+  <button class="@button" disabled={!library.needsSaving} onclick={() => library.reset()}
+    >Reset</button
+  >
+  <form
+    action="#"
+    onsubmit={(e) => {
+      e.preventDefault()
+      library.palettes.push(Palette.fromColors([newColor], 12))
+    }}
+  >
+    <input bind:value={newColor} type="color" />
+    <button class="@button" type="submit">Add palette</button>
+  </form>
+</div>
 
 <section class="@section +first">
   {#each library.palettes as palette (palette)}

@@ -1,16 +1,33 @@
 <script lang="ts">
   import type { Swatch } from '$lib/palette/Swatch.svelte'
   import { formatLch } from '$lib/palette/utils'
-  import { formatHex } from 'culori'
+  import { formatHex, oklch } from 'culori'
 
   const { swatch }: { swatch: Swatch } = $props()
+
+  const fromString = (input: string) => {
+    const color = oklch(input)
+    if (color && color.h) {
+      swatch.color.l = color.l
+      swatch.color.c = color.c
+      swatch.color.h = color.h
+    }
+  }
 </script>
 
 <div class="editor">
   {#if swatch.isDefined}
-    <button disabled={!swatch.canBeMovedLeft} onclick={() => swatch.moveLeft()}>&lt;</button>
-    <button disabled={!swatch.canBeRemoved} onclick={() => swatch.remove()}>Remove color</button>
-    <button disabled={!swatch.canBeMovedRight} onclick={() => swatch.moveRight()}>&gt;</button>
+    <div class="actions">
+      <button class="@button" disabled={!swatch.canMoveLeft} onclick={() => swatch.moveLeft()}
+        >&lsaquo; Move left</button
+      >
+      <button class="@button" disabled={!swatch.canBeRemoved} onclick={() => swatch.remove()}
+        >Unpin and reset color</button
+      >
+      <button class="@button" disabled={!swatch.canMoveRight} onclick={() => swatch.moveRight()}
+        >Move right &rsaquo;</button
+      >
+    </div>
     <div class="values">
       <div class="value">
         <span>Lightness</span>
@@ -29,11 +46,23 @@
       </div>
     </div>
   {:else}
-    <button onclick={() => swatch.add()}>Pin this color</button>
+    <button class="@button" onclick={() => swatch.add()}>Pin this color</button>
   {/if}
   <div class="formats">
-    <span>{formatHex(swatch.color)}</span>
-    <span>{formatLch(swatch.color)}</span>
+    <span
+      ><input
+        type="text"
+        value={formatHex(swatch.color)}
+        onchange={(e) => fromString(e.currentTarget.value)}
+      /></span
+    >
+    <span
+      ><input
+        type="text"
+        value={formatLch(swatch.color)}
+        onchange={(e) => fromString(e.currentTarget.value)}
+      /></span
+    >
   </div>
 </div>
 

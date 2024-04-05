@@ -10,7 +10,7 @@
 
   const { library } = getPaletteContext()
 
-  let expanded = $state(false)
+  let expanded = $derived(palette.selectedSwatchIndex !== -1)
 </script>
 
 <div
@@ -18,16 +18,13 @@
   class:expanded
   use:clickOutside
   onoutclick={() => {
-    expanded = false
-
     palette.deselectAll()
   }}
 >
   {#if expanded}
     <div class="actions">
-      <button onclick={() => library.removePalette(palette)}>Remove</button>
-      <button onclick={() => (expanded = false)}>X Close</button>
-      <button onclick={() => library.duplicatePalette(palette)}>Duplicate</button>
+      <button class="@button" onclick={() => library.removePalette(palette)}>Remove</button>
+      <button class="@button" onclick={() => library.duplicatePalette(palette)}>Duplicate</button>
     </div>
   {/if}
   <div class="swatches">
@@ -43,24 +40,9 @@
       <PalettePlot colors={palette.swatches.map((s) => s.color)} />
     </div>
   {/if}
-  {#if !expanded}
-    <button class="expand" onclick={() => (expanded = true)}></button>
-  {/if}
 </div>
 
 <style lang="postcss">
-  .expand {
-    display: block;
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    border: none;
-    background: #0001;
-    cursor: pointer;
-    &:hover {
-      opacity: 1;
-    }
-  }
   .swatches {
     position: relative;
     display: flex;

@@ -1,4 +1,7 @@
-:where(body, button, input, select) {
+body,
+button,
+input,
+select {
   font-family:
     ui-sans-serif,
     system-ui,
@@ -10,4 +13,9 @@
     Arial,
     sans-serif,
     'Apple Color Emoji';
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
 }

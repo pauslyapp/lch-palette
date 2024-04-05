@@ -32,10 +32,10 @@
     background-color: var(--bg);
     height: 4rem;
     border-radius: 0.25rem;
+    cursor: pointer;
 
     &.expanded {
       height: 6rem;
-      cursor: pointer;
     }
 
     &:hover,

@@ -19,12 +19,12 @@ export class Swatch {
 
   color = $state<Oklch>({ mode: 'oklch', l: 0, c: 0, h: 0 })
 
-  canBeMovedLeft = $derived.by(
+  canMoveLeft = $derived.by(
     () =>
       this.index !== 0 && !this.#palette.definedColors.find(([index]) => index === this.index - 1),
   )
   canBeRemoved = $derived.by(() => this.#palette.definedColors.length > 1)
-  canBeMovedRight = $derived.by(
+  canMoveRight = $derived.by(
     () =>
       this.index < this.#palette.colorCount - 1 &&
       !this.#palette.definedColors.find(([index]) => index === this.index + 1),
@@ -45,13 +45,15 @@ export class Swatch {
     this.#palette.defineColor(this.index, this.color)
   }
   moveLeft() {
-    if (this.definedColor) {
+    if (this.definedColor && this.canMoveLeft) {
       this.definedColor[0]--
+      this.#palette.selectedSwatchIndex--
     }
   }
   moveRight() {
-    if (this.definedColor) {
+    if (this.definedColor && this.canMoveRight) {
       this.definedColor[0]++
+      this.#palette.selectedSwatchIndex++
     }
   }
   select() {
