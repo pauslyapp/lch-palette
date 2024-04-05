@@ -1,30 +1,16 @@
 <script lang="ts">
   import ColorSchemeSwitcher from '$lib/components/ColorSchemeSwitcher.svelte'
+  import NewPalette from '$lib/components/NewPalette.svelte'
   import PaletteViewer from '$lib/components/PaletteViewer.svelte'
-  import { Palette } from '$lib/palette/Palette.svelte'
   import { getPaletteContext } from '$lib/palette/context.svelte'
-  // import { createTestPalettes } from '$lib/palette/test'
 
   const context = getPaletteContext()
 
   const library = $derived(context.library)
   const settings = $derived(context.settings)
-
-  let newColor = $state('#3b82f6')
 </script>
 
 <div class="actions">
-  <form
-    class="actions"
-    action="#"
-    onsubmit={(e) => {
-      e.preventDefault()
-      library.palettes.push(Palette.fromColors([newColor], 12))
-    }}
-  >
-    <input bind:value={newColor} type="color" />
-    <button class="@button" type="submit">Add palette +</button>
-  </form>
   <!-- <button class="@button" onclick={() => library.palettes.push(...createTestPalettes())}
     >Create demo palettes</button
   > -->
@@ -49,13 +35,10 @@
   {/each}
 </section>
 
+<NewPalette />
+
 <style lang="postcss">
   section {
     margin-top: 3rem;
-  }
-  form {
-    input {
-      height: 2.25rem;
-    }
   }
 </style>

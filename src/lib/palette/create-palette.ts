@@ -2,15 +2,13 @@ import { oklch, type Oklch } from 'culori'
 import { CurveInterpolator } from 'curve-interpolator'
 import type { DefinedColor, SwatchColor } from './Palette.svelte'
 
-const COLOR_COUNT = 12
-
 const getIdealLigthnessCurve = (colorCount: number) => {
   return new CurveInterpolator(
     [
       [0, 0.97],
       [1, 0.93],
       [colorCount - 2, 0.26],
-      [COLOR_COUNT - 1, 0.22],
+      [colorCount - 1, 0.22],
     ],
     { tension: 0.1, alpha: 0.9 },
   )
@@ -56,6 +54,10 @@ export const createDefinedColors = (
     .map((color) => oklch(color))
     .filter((color): color is Oklch => !!color)
   if (colors.length === 0) return []
+  console.log(
+    'hi',
+    colors.map((color) => [getClosestIndex(color, colorCount), color]),
+  )
   return colors.map((color) => [getClosestIndex(color, colorCount), color])
 }
 
@@ -103,7 +105,7 @@ export const createPalette = (definedColors: DefinedColor[], colorCount: number)
   const firstDefinedColorRatio = getMaxChroma(firstDefined.l, firstDefined.c)
   const lastDefinedColorRatio = getMaxChroma(lastDefined.l, lastDefined.c)
 
-  const idealChromaRatioFunction = (i: number) => {
+  const idealChromaRatioFunction = (i: number, colorCount: number) => {
     const ratioStart = Math.min(
       firstDefinedColorRatio,
       isFirstDefined ? getMaxChroma(firstDefined!.l, firstDefined!.c) : IDEAL_CHROMA_RATIO,
@@ -114,7 +116,7 @@ export const createPalette = (definedColors: DefinedColor[], colorCount: number)
       isLastDefined ? getMaxChroma(lastDefined!.l, lastDefined!.c) : IDEAL_CHROMA_RATIO,
     )
 
-    return ratioStart + (ratioEnd - ratioStart) * (i / (COLOR_COUNT - 1))
+    return ratioStart + (ratioEnd - ratioStart) * (i / (colorCount - 1))
   }
 
   const filledColors = Array.from({ length: colorCount }).map(
@@ -164,7 +166,8 @@ export const createPalette = (definedColors: DefinedColor[], colorCount: number)
         summedChromas.maxChroma,
         summedChromas.totalInfluence < 1
           ? summedChromas.chroma +
-              chromaFunction(l, idealChromaRatioFunction(i)) * (1 - summedChromas.totalInfluence)
+              chromaFunction(l, idealChromaRatioFunction(i, colorCount)) *
+                (1 - summedChromas.totalInfluence)
           : summedChromas.chroma / summedChromas.totalInfluence,
       )
 
