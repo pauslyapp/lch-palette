@@ -29,10 +29,10 @@
     >Create demo palettes</button
   > -->
   <button class="@button" disabled={!library.needsSaving} onclick={() => library.save()}
-    >Save</button
+    >Save 💾</button
   >
   <button class="@button" disabled={!library.needsSaving} onclick={() => library.reset()}
-    >Reset</button
+    >Reset ↩️</button
   >
 
   <ColorSchemeSwitcher />

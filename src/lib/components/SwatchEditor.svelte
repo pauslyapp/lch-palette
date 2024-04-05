@@ -22,7 +22,7 @@
         >&lsaquo; Move left</button
       >
       <button class="@button" disabled={!swatch.canBeRemoved} onclick={() => swatch.remove()}
-        >Unpin and reset color</button
+        >Unpin and reset color ⛔️</button
       >
       <button class="@button" disabled={!swatch.canMoveRight} onclick={() => swatch.moveRight()}
         >Move right &rsaquo;</button

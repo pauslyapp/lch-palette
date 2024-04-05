@@ -24,8 +24,10 @@
     <header>
       <div class="actions">
         Palette:
-        <button class="@button" onclick={() => library.removePalette(palette)}>Remove</button>
-        <button class="@button" onclick={() => library.duplicatePalette(palette)}>Duplicate</button>
+        <button class="@button" onclick={() => library.removePalette(palette)}>Remove 🛑</button>
+        <button class="@button" onclick={() => library.duplicatePalette(palette)}
+          >Duplicate 👯</button
+        >
       </div>
     </header>
   {/if}
