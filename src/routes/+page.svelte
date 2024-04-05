@@ -1,23 +1,25 @@
 <script lang="ts">
   import PaletteViewer from '$lib/components/PaletteViewer.svelte'
-  import { Palettes } from '$lib/palette/Palettes.svelte'
+  import { getPaletteContext } from '$lib/palette/context.svelte'
   import { createTestPalettes } from '$lib/palette/test'
 
-  let hex = $state(false)
+  const context = getPaletteContext()
 
-  const palettes = new Palettes()
+  const library = $derived(context.library)
+  const settings = $derived(context.settings)
 </script>
 
 <div class="options">
-  Hex: <input type="checkbox" bind:checked={hex} />
+  Hex: <input type="checkbox" bind:checked={settings.showInRgb} />
 </div>
 <br />
-<button onclick={() => palettes.palettes.push(...createTestPalettes())}>test</button>
+<button onclick={() => library.palettes.push(...createTestPalettes())}>Create demo palettes</button>
+<button disabled={!library.needsSaving} onclick={() => library.save()}>Save</button>
+<button disabled={!library.needsSaving} onclick={() => library.reset()}>Reset</button>
 
 <section class="@section +first">
-  {#each palettes.palettes as palette}
+  {#each library.palettes as palette (palette)}
     <PaletteViewer {palette} />
-    <button onclick={() => palettes.removePalette(palette)}>Remove</button>
   {/each}
 </section>
 

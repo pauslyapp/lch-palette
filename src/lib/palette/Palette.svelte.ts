@@ -16,11 +16,15 @@ export class Palette {
   colorCount = $state(0)
   definedColors = $state<DefinedColor[]>([])
 
+  selectedSwatchIndex = $state(-1)
+
   swatches = $derived<Swatch[]>(
     createPalette(this.definedColors, this.colorCount).map(
       ({ color, defined }, i) => new Swatch(this, i, color, defined),
     ),
   )
+
+  selectedSwatch = $derived.by(() => this.swatches[this.selectedSwatchIndex])
 
   constructor(definedColors: DefinedColor[], colorCount: number) {
     this.definedColors = definedColors
@@ -38,6 +42,10 @@ export class Palette {
   removeColor(index: number) {
     if (this.definedColors.length <= 1) return
     this.definedColors = this.definedColors.filter(([i]) => i !== index)
+  }
+
+  deselectAll() {
+    this.swatches.forEach((swatch) => swatch.deselect())
   }
 
   serialize(): SerializedPalette {

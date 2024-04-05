@@ -8,6 +8,12 @@ declare global {
     // interface PageState {}
     // interface Platform {}
   }
+
+  namespace svelteHTML {
+    interface HTMLAttributes {
+      onoutclick?: () => void
+    }
+  }
 }
 
 export {}

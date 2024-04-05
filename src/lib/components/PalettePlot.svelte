@@ -4,7 +4,7 @@
   export let colors: Oklch[]
 
   const width = 100
-  const height = 15
+  const height = 10
   const py = 2
 
   const cellWidth = width / colors.length
@@ -40,7 +40,6 @@
 
 <style lang="postcss">
   svg {
-    background-color: #0001;
     width: 100%;
   }
 </style>

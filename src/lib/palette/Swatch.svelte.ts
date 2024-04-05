@@ -1,18 +1,16 @@
 import type { Oklch } from 'culori'
 import type { Palette } from './Palette.svelte'
 
-// type LchColor = {
-//   l: number
-//   c: number
-//   h: number
-// }
-
 export class Swatch {
   #palette: Palette
 
   index = $state(0)
 
   isDefined = $state(false)
+
+  get isSelected() {
+    return this.#palette.selectedSwatchIndex === this.index
+  }
 
   get definedColor() {
     if (!this.isDefined) return null
@@ -39,15 +37,6 @@ export class Swatch {
     this.color = color
   }
 
-  // setNewColor(l: number, c: number, h: number) {
-  //   this.color = {
-  //     l,
-  //     c,
-  //     h,
-  //   }
-  //   this.isDefined = true
-  // }
-
   remove() {
     this.#palette.removeColor(this.index)
   }
@@ -64,5 +53,11 @@ export class Swatch {
     if (this.definedColor) {
       this.definedColor[0]++
     }
+  }
+  select() {
+    this.#palette.selectedSwatchIndex = this.index
+  }
+  deselect() {
+    this.#palette.selectedSwatchIndex = -1
   }
 }

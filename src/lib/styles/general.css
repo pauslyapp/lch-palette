@@ -1,0 +1,13 @@
+:where(body, button, input, select) {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    'Apple Color Emoji';
+}
