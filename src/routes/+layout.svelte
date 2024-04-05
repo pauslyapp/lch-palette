@@ -14,6 +14,10 @@
   })
 </script>
 
+<svelte:head>
+  <title>Oklch Palette Generator</title>
+</svelte:head>
+
 <main>
   {@render children()}
 </main>
