@@ -58,7 +58,7 @@
   }
   form {
     input {
-      height: 100%;
+      height: 2.25rem;
     }
   }
 </style>

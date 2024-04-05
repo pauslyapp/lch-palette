@@ -1,13 +1,13 @@
 .\@button {
-  border: 1px solid #0001;
+  border: 1px solid var(--color-border);
   padding: 0rem 0.5rem;
   display: inline-flex;
   border-radius: 0.25rem;
-  background-color: #f3f3f3;
+  background-color: var(--color-bg-secondary);
   height: 2.25rem;
   align-items: center;
 
   &:hover:not(:disabled) {
-    background-color: #e3e3e3;
+    background-color: color-mix(in oklab, var(--color-bg), var(--color-bg-secondary));
   }
 }

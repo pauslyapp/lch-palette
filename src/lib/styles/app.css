@@ -2,5 +2,6 @@
 
 @import './reset.css' layer(reset);
 
+@import './settings.css' layer(base);
 @import './general.css' layer(base);
 @import './@button.css' layer(base);

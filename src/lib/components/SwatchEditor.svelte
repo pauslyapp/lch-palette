@@ -49,15 +49,16 @@
     <button class="@button" onclick={() => swatch.add()}>Pin this color</button>
   {/if}
   <div class="formats">
-    <span
-      ><input
+    <span class="hex">
+      Hex <input
         type="text"
         value={formatHex(swatch.color)}
         onchange={(e) => fromString(e.currentTarget.value)}
       /></span
     >
-    <span
-      ><input
+    <span class="oklch">
+      Oklch
+      <input
         type="text"
         value={formatLch(swatch.color)}
         onchange={(e) => fromString(e.currentTarget.value)}
@@ -69,11 +70,18 @@
 <style lang="postcss">
   .editor {
   }
+  .actions {
+    justify-content: center;
+    margin-block: 1rem;
+  }
   .values {
     display: grid;
     grid-template-columns: auto auto 1fr;
     gap: 0.5rem;
     margin-block: 0.5rem;
+    padding: 1rem;
+    background: var(--color-bg-secondary);
+    border-radius: 0.25rem;
   }
   .value {
     display: grid;
@@ -85,12 +93,23 @@
   }
   .formats {
     span {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       font-family: monospace;
-      border: 1px solid #0002;
-      border-radius: 0.125rem;
+      border-radius: 0.25rem;
       padding: 0.25rem 0.5rem;
-      background-color: #0001;
+      background: var(--color-bg-secondary);
+    }
+    .hex {
+      input {
+        width: 7ch;
+      }
+    }
+    .oklch {
+      input {
+        width: 30ch;
+      }
     }
   }
 </style>

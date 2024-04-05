@@ -2,7 +2,6 @@
   import { clickOutside } from '$lib/actions/click-outside'
   import type { Palette } from '$lib/palette/Palette.svelte'
   import { getPaletteContext } from '$lib/palette/context.svelte'
-  import PalettePlot from './PalettePlot.svelte'
   import Swatch from './Swatch.svelte'
   import SwatchEditor from './SwatchEditor.svelte'
 
@@ -22,10 +21,13 @@
   }}
 >
   {#if expanded}
-    <div class="actions">
-      <button class="@button" onclick={() => library.removePalette(palette)}>Remove</button>
-      <button class="@button" onclick={() => library.duplicatePalette(palette)}>Duplicate</button>
-    </div>
+    <header>
+      <div class="actions">
+        Palette:
+        <button class="@button" onclick={() => library.removePalette(palette)}>Remove</button>
+        <button class="@button" onclick={() => library.duplicatePalette(palette)}>Duplicate</button>
+      </div>
+    </header>
   {/if}
   <div class="swatches">
     {#each palette.swatches as swatch}
@@ -35,14 +37,19 @@
   {#if expanded && palette.selectedSwatch}
     <SwatchEditor swatch={palette.selectedSwatch} />
   {/if}
-  {#if expanded}
+  <!-- {#if expanded}
     <div class="plot">
       <PalettePlot colors={palette.swatches.map((s) => s.color)} />
     </div>
-  {/if}
+  {/if} -->
 </div>
 
 <style lang="postcss">
+  header {
+    background: var(--color-bg-secondary);
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.5rem;
+  }
   .swatches {
     position: relative;
     display: flex;
@@ -63,8 +70,8 @@
         content: '';
         position: absolute;
         inset: -1rem;
-        border: 3px solid #0002;
-        border-radius: 0.5rem;
+        border: 3px solid var(--color-border);
+        border-radius: 0.25rem;
         z-index: -1;
       }
     }
