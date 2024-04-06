@@ -53,16 +53,12 @@ export class Palette {
       colors: this.swatches
         .map((swatch, i) => ({ color: swatch.color, isDefined: swatch.isDefined, i }))
         .filter(({ isDefined }) => isDefined)
-        .map(({ color, i }) => [i, { l: color.l, c: color.c, h: color.h ?? 0 }]),
+        .map(({ color, i }) => [i, [color.l, color.c, color.h ?? 0]]),
     }
   }
 }
 
-export const serializedOklchSchema = z.object({
-  l: z.number(),
-  c: z.number(),
-  h: z.number(),
-})
+export const serializedOklchSchema = z.tuple([z.number(), z.number(), z.number()])
 export const serializedPaletteSchema = z.object({
   name: z.string(),
   count: z.number(),

@@ -1,45 +1,56 @@
 import { browser } from '$app/environment'
+import { replaceState } from '$app/navigation'
+import { page } from '$app/stores'
+import { get } from 'svelte/store'
 import { Palette, serializedPaletteSchema, type SerializedPalette } from './Palette.svelte'
+import { debounce } from 'lodash-es'
 
 export class Library {
   palettes: Palette[] = $state([])
 
-  #storageKey = 'palettes'
+  needsSaving = $derived.by(() => this.#restoredJson !== this.#updatedJson)
 
-  needsSaving = $derived.by(() => this.#storedJson !== this.#updatedJson)
-
-  #storedJson = $state('')
+  #restoredJson = $state('')
   #updatedJson = $state('')
 
   constructor() {
     if (browser) {
-      const storedPalettes = localStorage.getItem(this.#storageKey)
+      this.#restore()
 
-      if (storedPalettes) {
-        this.#storedJson = storedPalettes
-        this.#restore()
-      }
+      const debouncedUrlUpdate = debounce((base64: string) => replaceState(`#${base64}`, {}), 100, {
+        trailing: true,
+      })
       $effect(() => {
         const serialized = this.palettes.map((palette) => palette.serialize())
         this.#updatedJson = JSON.stringify(serialized)
+        const base64 = btoa(this.#updatedJson)
+        // Using history instead of svelte kit because there is an error in v5
+        // at the moment.
+        debouncedUrlUpdate(base64)
       })
     }
   }
 
   save() {
-    if (this.#updatedJson) {
-      localStorage.setItem(this.#storageKey, this.#updatedJson)
-      this.#storedJson = this.#updatedJson
-    }
+    window.alert('Bookmark this page to save the palette')
   }
   reset() {
-    if (this.#storedJson) {
+    if (this.#restoredJson) {
       this.#restore()
     }
   }
   #restore() {
     try {
-      const parsed = JSON.parse(this.#storedJson) as SerializedPalette[]
+      if (!this.#restoredJson) {
+        const base64Encoded = get(page).url.hash.replace(/^#/, '')
+        if (!base64Encoded) return
+
+        const storedPalettes = atob(base64Encoded)
+
+        this.#restoredJson = storedPalettes
+      }
+
+      const parsed = JSON.parse(this.#restoredJson) as SerializedPalette[]
       this.palettes = []
       if (!Array.isArray(parsed)) throw 'Data stored is not an arary.'
 
@@ -51,7 +62,10 @@ export class Library {
         this.palettes.push(
           new Palette(
             palette.name,
-            palette.colors.map(([i, color]) => [i, { mode: 'oklch', ...color }]),
+            palette.colors.map(([i, color]) => [
+              i,
+              { mode: 'oklch', l: color[0], c: color[1], h: color[2] },
+            ]),
             palette.count,
           ),
         )

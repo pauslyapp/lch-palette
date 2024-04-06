@@ -15,7 +15,12 @@
   }
 </script>
 
-<div class="editor">
+<div
+  class="editor"
+  style:--l={swatch.color.l}
+  style:--c={swatch.color.c}
+  style:--h={swatch.color.h}
+>
   {#if swatch.isDefined}
     <div class="actions">
       <button class="@button" disabled={!swatch.canMoveLeft} onclick={() => swatch.moveLeft()}
@@ -29,24 +34,32 @@
       >
     </div>
     <div class="values">
-      <div class="value">
+      <div class="value lightness">
         <span>Lightness</span>
         <input type="number" bind:value={swatch.color.l} />
-        <input type="range" min="0" max="1" step="0.001" bind:value={swatch.color.l} />
+        <div class="range">
+          <input type="range" min="0" max="1" step="0.001" bind:value={swatch.color.l} />
+        </div>
       </div>
-      <div class="value">
+      <div class="value chroma">
         <span>Chroma</span>
         <input type="number" bind:value={swatch.color.c} />
-        <input type="range" min="0" max="0.3" step="0.001" bind:value={swatch.color.c} />
+        <div class="range">
+          <input type="range" min="0" max="0.3" step="0.001" bind:value={swatch.color.c} />
+        </div>
       </div>
-      <div class="value">
+      <div class="value hue">
         <span>Hue</span>
         <input type="number" bind:value={swatch.color.h} />
-        <input type="range" min="0" max="360" step="0.01" bind:value={swatch.color.h} />
+        <div class="range">
+          <input type="range" min="0" max="360" step="0.01" bind:value={swatch.color.h} />
+        </div>
       </div>
     </div>
   {:else}
-    <button class="@button" onclick={() => swatch.add()}>Pin this color</button>
+    <div class="actions">
+      <button class="@button" onclick={() => swatch.add()}>Pin this color</button>
+    </div>
   {/if}
   <div class="formats">
     <span class="hex">
@@ -90,7 +103,62 @@
     input[type='number'] {
       width: 6rem;
     }
+
+    .range {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      input {
+        width: 100%;
+      }
+      &::after {
+        content: '';
+        height: 1rem;
+        border-radius: 0.25rem;
+        visibility: hidden;
+      }
+      &:hover::after {
+        visibility: visible;
+      }
+    }
+
+    &.hue .range::after {
+      background: linear-gradient(
+        to right in oklch longer hue,
+        oklch(0.65 0.25 0) 0%,
+        oklch(0.65 0.25 360)
+      );
+    }
+    &.lightness .range::after {
+      background: linear-gradient(
+        to right in oklch,
+        oklch(0 var(--c) var(--h)),
+        oklch(0.5 var(--c) var(--h)),
+        oklch(1 var(--c) var(--h))
+      );
+    }
+    &.chroma .range::after {
+      background: linear-gradient(
+        to right in oklch,
+        oklch(0.6 0.01 var(--h)),
+        oklch(0.6 0.3 var(--h))
+      );
+    }
   }
+  /* .slider-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      .hue-preview {
+        height: 1rem;
+        border-radius: 0.25rem;
+        background: linear-gradient(
+          to right in oklch longer hue,
+          oklch(0.6 0.2 0) 0%,
+          oklch(0.6 0.2 360)
+        );
+      }
+    } */
   .formats {
     span {
       display: inline-flex;
@@ -103,7 +171,7 @@
     }
     .hex {
       input {
-        width: 7ch;
+        width: 8ch;
       }
     }
     .oklch {
