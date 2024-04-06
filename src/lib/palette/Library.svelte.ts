@@ -15,7 +15,7 @@ export class Library {
 
   constructor() {
     if (browser) {
-      this.#restore()
+      this.#restoreFromUrl()
 
       const debouncedUrlUpdate = debounce((base64: string) => replaceState(`#${base64}`, {}), 100, {
         trailing: true,
@@ -36,10 +36,10 @@ export class Library {
   }
   reset() {
     if (this.#restoredJson) {
-      this.#restore()
+      this.#restoreFromUrl()
     }
   }
-  #restore() {
+  #restoreFromUrl() {
     try {
       if (!this.#restoredJson) {
         const base64Encoded = get(page).url.hash.replace(/^#/, '')
