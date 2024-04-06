@@ -28,6 +28,7 @@
         <button class="@button" onclick={() => library.duplicatePalette(palette)}
           >Duplicate 👯</button
         >
+        <input type="text" bind:value={palette.name} />
       </div>
     </header>
   {/if}
@@ -39,11 +40,6 @@
   {#if expanded && palette.selectedSwatch}
     <SwatchEditor swatch={palette.selectedSwatch} />
   {/if}
-  <!-- {#if expanded}
-    <div class="plot">
-      <PalettePlot colors={palette.swatches.map((s) => s.color)} />
-    </div>
-  {/if} -->
 </div>
 
 <style lang="postcss">

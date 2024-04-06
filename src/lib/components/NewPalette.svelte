@@ -6,8 +6,11 @@
 
   const library = $derived(context.library)
 
-  let newColor = $state('#3b82f6')
-  let newCount = $state(12)
+  let newPalette = $state({
+    name: 'blue',
+    color: '#3b82f6',
+    count: 12,
+  })
 </script>
 
 <form
@@ -15,18 +18,22 @@
   action="#"
   onsubmit={(e) => {
     e.preventDefault()
-    library.palettes.push(Palette.fromColors([newColor], newCount))
+    library.palettes.push(Palette.fromColors(newPalette.name, [newPalette.color], newPalette.count))
   }}
 >
   <h3>New palette</h3>
 
   <label>
+    <span>Color name</span>
+    <input type="text" bind:value={newPalette.name} />
+  </label>
+  <label>
     <span>Color count</span>
-    <input type="number" min="5" max="20" step="1" bind:value={newCount} />
+    <input type="number" min="5" max="20" step="1" bind:value={newPalette.count} />
   </label>
   <label>
     <span>Color</span>
-    <input bind:value={newColor} type="color" />
+    <input bind:value={newPalette.color} type="color" />
   </label>
 
   <div class="actions">

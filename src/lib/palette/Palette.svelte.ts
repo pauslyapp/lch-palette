@@ -1,18 +1,15 @@
 import type { Oklch } from 'culori'
 import { Swatch } from './Swatch.svelte'
 import { createPalette, createDefinedColors } from './create-palette'
+import { z } from 'zod'
 
 /** The actual colors, defined by the user, by index in the palette */
 export type DefinedColor = [number, Oklch]
 
 export type SwatchColor = { color: Oklch; defined: boolean }
 
-export type SerializedPalette = {
-  count: number
-  colors: [number, Oklch][]
-}
-
 export class Palette {
+  name = $state('')
   colorCount = $state(0)
   definedColors = $state<DefinedColor[]>([])
 
@@ -26,13 +23,14 @@ export class Palette {
 
   selectedSwatch = $derived.by(() => this.swatches[this.selectedSwatchIndex])
 
-  constructor(definedColors: DefinedColor[], colorCount: number) {
+  constructor(name: string, definedColors: DefinedColor[], colorCount: number) {
+    this.name = name
     this.definedColors = definedColors
     this.colorCount = colorCount
   }
 
-  static fromColors(color: string[], colorCount: number) {
-    return new Palette(createDefinedColors(color, colorCount), colorCount)
+  static fromColors(name: string, color: string[], colorCount: number) {
+    return new Palette(name, createDefinedColors(color, colorCount), colorCount)
   }
 
   defineColor(index: number, color: Oklch) {
@@ -50,11 +48,24 @@ export class Palette {
 
   serialize(): SerializedPalette {
     return {
+      name: this.name,
       count: this.swatches.length,
       colors: this.swatches
         .map((swatch, i) => ({ color: swatch.color, isDefined: swatch.isDefined, i }))
         .filter(({ isDefined }) => isDefined)
-        .map(({ color, i }) => [i, color]),
+        .map(({ color, i }) => [i, { l: color.l, c: color.c, h: color.h ?? 0 }]),
     }
   }
 }
+
+export const serializedOklchSchema = z.object({
+  l: z.number(),
+  c: z.number(),
+  h: z.number(),
+})
+export const serializedPaletteSchema = z.object({
+  name: z.string(),
+  count: z.number(),
+  colors: z.array(z.tuple([z.number(), serializedOklchSchema])),
+})
+export type SerializedPalette = z.infer<typeof serializedPaletteSchema>

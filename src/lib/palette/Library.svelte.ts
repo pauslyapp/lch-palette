@@ -1,5 +1,5 @@
 import { browser } from '$app/environment'
-import { Palette, type SerializedPalette } from './Palette.svelte'
+import { Palette, serializedPaletteSchema, type SerializedPalette } from './Palette.svelte'
 
 export class Library {
   palettes: Palette[] = $state([])
@@ -41,8 +41,20 @@ export class Library {
     try {
       const parsed = JSON.parse(this.#storedJson) as SerializedPalette[]
       this.palettes = []
+      if (!Array.isArray(parsed)) throw 'Data stored is not an arary.'
+
       for (const palette of parsed) {
-        this.palettes.push(new Palette(palette.colors, palette.count))
+        if (!serializedPaletteSchema.safeParse(palette).success) {
+          console.warn('Invalid palette', palette)
+          continue
+        }
+        this.palettes.push(
+          new Palette(
+            palette.name,
+            palette.colors.map(([i, color]) => [i, { mode: 'oklch', ...color }]),
+            palette.count,
+          ),
+        )
       }
     } catch (e) {
       console.error('Unable to load stored palettes', e)
@@ -57,7 +69,7 @@ export class Library {
     this.palettes.splice(
       this.palettes.indexOf(palette) + 1,
       0,
-      new Palette(palette.definedColors, palette.colorCount),
+      new Palette(palette.name, palette.definedColors, palette.colorCount),
     )
   }
 }
