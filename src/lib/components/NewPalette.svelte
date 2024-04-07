@@ -1,26 +1,32 @@
 <script lang="ts">
   import { Palette } from '$lib/palette/Palette.svelte'
   import { getPaletteContext } from '$lib/palette/context.svelte'
+  import { formatHex, parse } from 'culori'
 
   const context = getPaletteContext()
 
   const library = $derived(context.library)
 
+  const INITIAL_COLORS = ['#3b82f6', '', '']
+
   let newPalette = $state({
     name: 'blue',
-    color: '#3b82f6',
+    colors: [...INITIAL_COLORS],
     count: 12,
   })
+
+  let canSubmit = $derived(newPalette.colors.find(Boolean))
+
+  const onsubmit = (e: SubmitEvent) => {
+    e.preventDefault()
+    library.palettes.push(
+      Palette.fromColors(newPalette.name, [...newPalette.colors.filter(Boolean)], newPalette.count),
+    )
+    newPalette.colors = [...INITIAL_COLORS]
+  }
 </script>
 
-<form
-  class="new-palette"
-  action="#"
-  onsubmit={(e) => {
-    e.preventDefault()
-    library.palettes.push(Palette.fromColors(newPalette.name, [newPalette.color], newPalette.count))
-  }}
->
+<form class="new-palette" action="#" {onsubmit}>
   <h3>New palette</h3>
 
   <label>
@@ -32,12 +38,27 @@
     <input type="number" min="5" max="20" step="1" bind:value={newPalette.count} />
   </label>
   <label>
-    <span>Color</span>
-    <input bind:value={newPalette.color} type="color" />
+    <span>Colors<br /><small>Add up to three colors for a single palette.</small></span>
+    <div>
+      {#each newPalette.colors as _, i}
+        <div class="color-input">
+          <input type="text" bind:value={newPalette.colors[i]} />
+          <input
+            type="color"
+            oninput={(e) => (newPalette.colors[i] = e.currentTarget.value)}
+            value={formatHex(parse(newPalette.colors[i]))}
+          />
+        </div>
+      {/each}
+    </div>
+    <!-- <div class="color-input">
+      <input type="text" />
+      <input bind:value={newPalette.color} type="color" />
+    </div> -->
   </label>
 
   <div class="actions">
-    <button class="@button" type="submit">Add palette +</button>
+    <button disabled={!canSubmit} class="@button" type="submit">Add palette +</button>
   </div>
 </form>
 
@@ -64,6 +85,14 @@
       margin-bottom: 0.5rem;
       span {
         width: 8rem;
+      }
+    }
+    .color-input {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      input[type='text'] {
+        width: 14ch;
       }
     }
   }

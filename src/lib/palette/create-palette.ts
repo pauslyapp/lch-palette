@@ -54,10 +54,6 @@ export const createDefinedColors = (
     .map((color) => oklch(color))
     .filter((color): color is Oklch => !!color)
   if (colors.length === 0) return []
-  console.log(
-    'hi',
-    colors.map((color) => [getClosestIndex(color, colorCount), color]),
-  )
   return colors.map((color) => [getClosestIndex(color, colorCount), color])
 }
 
