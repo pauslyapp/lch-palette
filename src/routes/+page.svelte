@@ -21,9 +21,7 @@
   <!-- <button class="@button" onclick={() => library.palettes.push(...createTestPalettes())}
     >Create demo palettes</button
   > -->
-  <button class="@button" disabled={!library.needsSaving} onclick={() => library.save()}>
-    Save 💾
-  </button>
+  <button class="@button" onclick={() => library.save()}> Save 💾 </button>
   <button class="@button" disabled={!library.needsSaving} onclick={() => library.reset()}>
     Reset ↩️
   </button>

@@ -67,9 +67,9 @@
       &::before {
         content: '';
         position: absolute;
-        inset: -1rem;
-        border: 3px solid var(--color-border);
-        border-radius: 0.25rem;
+        inset: -0.5rem;
+        border: 2px solid var(--color-border);
+        border-radius: 0.5rem;
         z-index: -1;
       }
     }

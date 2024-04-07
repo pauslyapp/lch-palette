@@ -27,7 +27,7 @@
         >&lsaquo; Move left</button
       >
       <button class="@button" disabled={!swatch.canBeRemoved} onclick={() => swatch.remove()}
-        >Unpin and reset color ⛔️</button
+        >Unpin ⛔️</button
       >
       <button class="@button" disabled={!swatch.canMoveRight} onclick={() => swatch.moveRight()}
         >Move right &rsaquo;</button
@@ -58,7 +58,7 @@
     </div>
   {:else}
     <div class="actions">
-      <button class="@button" onclick={() => swatch.add()}>Pin this color</button>
+      <button class="@button" onclick={() => swatch.add()}>Pin this color ➕</button>
     </div>
   {/if}
   <div class="formats">

@@ -45,6 +45,13 @@
   form {
     display: grid;
     place-content: center;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-tertiary);
+    margin-inline: auto;
+    border-radius: 0.5rem;
+    width: max-content;
+    max-width: 100%;
+    padding: 1rem;
 
     input[type='color'] {
       height: 2.25rem;
