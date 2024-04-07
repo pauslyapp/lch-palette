@@ -3,8 +3,8 @@
   import { formatLch } from '$lib/palette/utils'
   import { persistedState } from '$lib/persisted-state.svelte'
   import { formatHex, formatHsl } from 'culori'
-  import Modal from './Modal.svelte'
   import z from 'zod'
+  import Modal from './Modal.svelte'
 
   const { onclose }: { onclose: () => void } = $props()
 
@@ -18,6 +18,16 @@
     }),
     { colorFormat: 'oklch', exportFormat: 'plain' },
   )
+
+  let timeoutId: number
+  const copyToClipboard = () => {
+    clearTimeout(timeoutId)
+    navigator.clipboard.writeText(exportText)
+    copied = true
+    timeoutId = setTimeout(() => (copied = false), 200)
+  }
+
+  let copied = $state(false)
 
   const getExportText = () => {
     let exportString = ''
@@ -123,6 +133,12 @@ export const colors = {`
         <option value="figma">Figma (Design Tokens Format)</option>
       </select>
     </label>
+  {/snippet}
+
+  {#snippet actions()}
+    <button class="@button" onclick={copyToClipboard}>
+      📋 Copy to clipboard {#if copied}✅{/if}
+    </button>
   {/snippet}
 </Modal>
 
