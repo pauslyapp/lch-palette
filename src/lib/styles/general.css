@@ -26,3 +26,28 @@ select {
   align-items: center;
   flex-wrap: wrap;
 }
+
+hr {
+  margin-block: 5rem;
+  border: none;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+h1,
+h2,
+h3 {
+  margin-block: 1em;
+  &:first-child {
+    margin-top: 0;
+  }
+}
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.25rem;
+}

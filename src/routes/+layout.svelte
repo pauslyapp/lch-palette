@@ -19,8 +19,8 @@
   main {
     width: 60rem;
     max-width: 100%;
-    padding: 1rem;
     margin-inline: auto;
     padding-inline: 1rem;
+    padding-block: 1rem 10rem;
   }
 </style>

@@ -8,7 +8,10 @@ import { debounce } from 'lodash-es'
 export class Library {
   palettes: Palette[] = $state([])
 
-  needsSaving = $derived.by(() => this.#restoredJson !== this.#updatedJson)
+  hasUpdates = $derived.by(
+    () =>
+      this.#restoredJson && this.#restoredJson !== '[]' && this.#restoredJson !== this.#updatedJson,
+  )
 
   #restoredJson = $state('')
   #updatedJson = $state('')

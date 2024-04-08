@@ -30,7 +30,7 @@
   <h3>New palette</h3>
 
   <label>
-    <span>Color name</span>
+    <span>Palette name</span>
     <input type="text" bind:value={newPalette.name} />
   </label>
   <label>
@@ -72,7 +72,8 @@
     border-radius: 0.5rem;
     width: max-content;
     max-width: 100%;
-    padding: 1rem;
+    padding: 1.5rem 2rem;
+    gap: 1rem;
 
     input[type='color'] {
       height: 2.25rem;
@@ -80,11 +81,12 @@
 
     label {
       display: flex;
-      gap: 0.5rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
       align-items: center;
       margin-bottom: 0.5rem;
       span {
-        width: 8rem;
+        width: 10rem;
       }
     }
     .color-input {

@@ -4,6 +4,7 @@
   import NewPalette from '$lib/components/NewPalette.svelte'
   import PaletteViewer from '$lib/components/PaletteViewer.svelte'
   import { getPaletteContext } from '$lib/palette/context.svelte'
+  import About from './About.svelte'
 
   const context = getPaletteContext()
 
@@ -11,6 +12,8 @@
   const settings = $derived(context.settings)
 
   let showExport = $state(false)
+
+  let hasPalettes = $derived(library.palettes.length > 0)
 </script>
 
 {#if showExport}
@@ -21,24 +24,30 @@
   <!-- <button class="@button" onclick={() => library.palettes.push(...createTestPalettes())}
     >Create demo palettes</button
   > -->
-  <button class="@button" onclick={() => library.save()}> Save 💾 </button>
-  <button class="@button" disabled={!library.needsSaving} onclick={() => library.reset()}>
-    Reset ↩️
-  </button>
-  <button
-    class="@button"
-    disabled={library.palettes.length === 0}
-    onclick={() => (showExport = true)}
-  >
-    Export 📤
-  </button>
+  {#if hasPalettes}
+    <button class="@button" onclick={() => library.save()}> Save 💾 </button>
+    <button class="@button" disabled={!library.hasUpdates} onclick={() => library.reset()}>
+      Reset ↩️
+    </button>
+    <button
+      class="@button"
+      disabled={library.palettes.length === 0}
+      onclick={() => (showExport = true)}
+    >
+      Export 📤
+    </button>
+  {/if}
+
+  <div class="spacer"></div>
+
+  {#if hasPalettes}
+    <label class="@button" title="Display all color values in RGB instead of Oklch">
+      <span>RGB</span>
+      <input type="checkbox" bind:checked={settings.showInRgb} />
+    </label>
+  {/if}
 
   <ColorSchemeSwitcher />
-
-  <label class="@button" title="Display all color values in RGB instead of Oklch">
-    <span>RGB</span>
-    <input type="checkbox" bind:checked={settings.showInRgb} />
-  </label>
 </div>
 
 <section class="@section +first">
@@ -49,8 +58,15 @@
 
 <NewPalette />
 
+<hr />
+
+<About />
+
 <style lang="postcss">
   section {
     margin-top: 3rem;
+  }
+  .spacer {
+    flex: 1;
   }
 </style>
