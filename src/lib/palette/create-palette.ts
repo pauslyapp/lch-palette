@@ -6,9 +6,9 @@ const getIdealLigthnessCurve = (colorCount: number) => {
   return new CurveInterpolator(
     [
       [0, 0.97],
-      [1, 0.93],
-      [colorCount - 2, 0.26],
-      [colorCount - 1, 0.22],
+      [1, 0.935],
+      [colorCount - 2, 0.29],
+      [colorCount - 1, 0.21],
     ],
     { tension: 0.1, alpha: 0.9 },
   )
@@ -79,14 +79,30 @@ export const createPalette = (definedColors: DefinedColor[], colorCount: number)
 
   const lightnessPoints = definedColors.map(([index, color]) => [index, color.l])
 
+  const idealLightnessCurve = getIdealLigthnessCurve(colorCount)
+
+  console.log(
+    idealLightnessCurve.getPointAt(0)[1],
+    idealLightnessCurve.getPointAt(1 / (colorCount - 1))[1],
+    idealLightnessCurve.getPointAt((colorCount - 2) / (colorCount - 1))[1],
+    idealLightnessCurve.getPointAt((colorCount - 1) / (colorCount - 1))[1],
+  )
+
   if (!isFirstDefined) {
-    lightnessPoints.unshift([0, 0.97], [1, 0.935])
+    lightnessPoints.unshift(
+      [0, idealLightnessCurve.getPointAt(0)[1]],
+      [1, idealLightnessCurve.getPointAt(1 / (colorCount - 1))[1]],
+    )
     huePoints.unshift([0, firstDefined.h!])
   }
   if (!isLastDefined) {
-    lightnessPoints.push([lastIndex - 1, 0.33], [lastIndex, 0.2])
+    lightnessPoints.push(
+      [lastIndex - 1, idealLightnessCurve.getPointAt((colorCount - 2) / (colorCount - 1))[1]],
+      [lastIndex, idealLightnessCurve.getPointAt((colorCount - 1) / (colorCount - 1))[1]],
+    )
     huePoints.push([lastIndex, lastDefined.h!])
   }
+  console.log(lightnessPoints)
 
   const hueInterpolator = new CurveInterpolator(huePoints, {
     tension: 0.0,
