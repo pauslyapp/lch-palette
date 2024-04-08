@@ -57,7 +57,7 @@
     </div> -->
   </label>
 
-  <div class="actions">
+  <div class="@actions">
     <button disabled={!canSubmit} class="@button" type="submit">Add palette +</button>
   </div>
 </form>

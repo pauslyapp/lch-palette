@@ -20,7 +20,7 @@
   <Export onclose={() => (showExport = false)} />
 {/if}
 
-<div class="actions">
+<div class="@actions">
   <!-- <button class="@button" onclick={() => library.palettes.push(...createTestPalettes())}
     >Create demo palettes</button
   > -->

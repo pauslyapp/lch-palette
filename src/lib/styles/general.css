@@ -20,13 +20,6 @@ select {
     'Apple Color Emoji';
 }
 
-.actions {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 hr {
   margin-block: 5rem;
   border: none;

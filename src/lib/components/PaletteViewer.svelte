@@ -22,7 +22,7 @@
 >
   {#if expanded}
     <header>
-      <div class="actions">
+      <div class="@actions">
         Palette:
         <button class="@button" onclick={() => library.removePalette(palette)}>Remove 🛑</button>
         <button class="@button" onclick={() => library.duplicatePalette(palette)}

@@ -31,7 +31,7 @@
       <div class="options">{@render options?.()}</div>
     {/if}
     <div class="content">{@render children()}</div>
-    <div class="actions">
+    <div class="@actions">
       <button class="@button" onclick={onclose}> Close</button>
       {@render actions?.()}
     </div>

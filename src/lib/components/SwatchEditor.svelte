@@ -22,7 +22,7 @@
   style:--h={swatch.color.h}
 >
   {#if swatch.isDefined}
-    <div class="actions">
+    <div class="@actions">
       <button class="@button" disabled={!swatch.canMoveLeft} onclick={() => swatch.moveLeft()}
         >&lsaquo; Move left</button
       >
@@ -57,7 +57,7 @@
       </div>
     </div>
   {:else}
-    <div class="actions">
+    <div class="@actions">
       <button class="@button" onclick={() => swatch.add()}>Pin this color ➕</button>
     </div>
   {/if}
