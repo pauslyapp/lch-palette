@@ -4,7 +4,9 @@
 
     <p>
       This is a tool for creating and managing color gradient palettes. You can create new palettes,
-      edit existing ones, and export them in multiple formats.
+      edit existing ones, and export them in multiple formats. Learn more in our <a
+        href="https://www.pausly.app/blog/gradient-palettes-with-oklch">release blog post</a
+      >.
     </p>
   </details>
   <details>
