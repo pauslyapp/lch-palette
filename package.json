@@ -14,13 +14,13 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.2.0",
     "@sveltejs/adapter-static": "^3.0.1",
-    "@sveltejs/kit": "^2.5.5",
-    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@sveltejs/kit": "^2.5.6",
+    "@sveltejs/vite-plugin-svelte": "^3.1.0",
     "@types/culori": "^2.1.0",
-    "@types/eslint": "^8.56.7",
+    "@types/eslint": "^8.56.10",
     "@types/lodash-es": "^4.17.12",
-    "@typescript-eslint/eslint-plugin": "^7.5.0",
-    "@typescript-eslint/parser": "^7.5.0",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
     "culori": "^4.0.1",
     "curve-interpolator": "^3.3.1",
     "eslint": "^8.57.0",
@@ -28,13 +28,13 @@
     "eslint-plugin-svelte": "2.36.0-next.13",
     "lodash-es": "^4.17.21",
     "prettier": "^3.2.5",
-    "prettier-plugin-svelte": "^3.2.2",
-    "svelte": "^5.0.0-next.94",
+    "prettier-plugin-svelte": "^3.2.3",
+    "svelte": "5.0.0-next.108",
     "svelte-check": "^3.6.9",
     "tslib": "^2.6.2",
-    "typescript": "^5.4.3",
-    "vite": "^5.2.8",
-    "zod": "^3.22.4"
+    "typescript": "^5.4.5",
+    "vite": "^5.2.9",
+    "zod": "^3.22.5"
   },
   "type": "module"
 }

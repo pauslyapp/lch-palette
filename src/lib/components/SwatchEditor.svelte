@@ -83,10 +83,6 @@
 <style lang="postcss">
   .editor {
   }
-  .actions {
-    justify-content: center;
-    margin-block: 1rem;
-  }
   .values {
     display: grid;
     grid-template-columns: auto auto 1fr;

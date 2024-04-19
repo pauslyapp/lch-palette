@@ -53,11 +53,6 @@
     display: flex;
     gap: 0.1875rem;
     margin-block: 2rem 0.5rem;
-    &:hover {
-      .defined {
-        outline: 2px solid #000;
-      }
-    }
   }
   .palette {
     margin-block: 1.5rem;

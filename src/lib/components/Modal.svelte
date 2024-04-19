@@ -92,9 +92,5 @@
       align-self: stretch;
       overflow: hidden;
     }
-    .actions {
-      display: flex;
-      gap: 1rem;
-    }
   }
 </style>
