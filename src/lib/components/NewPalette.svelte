@@ -17,17 +17,34 @@
 
   let canSubmit = $derived(newPalette.colors.find(Boolean))
 
+  let error = $state<string>()
+
   const onsubmit = (e: SubmitEvent) => {
     e.preventDefault()
-    library.palettes.push(
-      Palette.fromColors(newPalette.name, [...newPalette.colors.filter(Boolean)], newPalette.count),
-    )
-    newPalette.colors = [...INITIAL_COLORS]
+    try {
+      library.palettes.push(
+        Palette.fromColors(
+          newPalette.name,
+          [...newPalette.colors.filter(Boolean)],
+          newPalette.count,
+        ),
+      )
+      newPalette.colors = [...INITIAL_COLORS]
+      error = undefined
+    } catch (e) {
+      error = `${e}`
+    }
   }
 </script>
 
 <form class="new-palette" action="#" {onsubmit}>
   <h3>New palette</h3>
+
+  {#if error}
+    <p class="error">
+      {error}
+    </p>
+  {/if}
 
   <label>
     <span>Palette name</span>
@@ -51,10 +68,6 @@
         </div>
       {/each}
     </div>
-    <!-- <div class="color-input">
-      <input type="text" />
-      <input bind:value={newPalette.color} type="color" />
-    </div> -->
   </label>
 
   <div class="@actions">
@@ -70,7 +83,7 @@
     background-color: var(--color-bg-tertiary);
     margin-inline: auto;
     border-radius: 0.5rem;
-    width: max-content;
+    width: 30rem;
     max-width: 100%;
     padding: 1.5rem 2rem;
     gap: 1rem;

@@ -22,7 +22,7 @@
   style:--h={swatch.color.h}
 >
   {#if swatch.isDefined}
-    <div class="@actions">
+    <div class="@actions +centered">
       <button class="@button" disabled={!swatch.canMoveLeft} onclick={() => swatch.moveLeft()}
         >&lsaquo; Move left</button
       >
@@ -57,7 +57,7 @@
       </div>
     </div>
   {:else}
-    <div class="@actions">
+    <div class="@actions +centered">
       <button class="@button" onclick={() => swatch.add()}>Pin this color ➕</button>
     </div>
   {/if}
@@ -96,14 +96,17 @@
     display: grid;
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
+    align-items: center;
     input[type='number'] {
       width: 6rem;
+      height: 2rem;
     }
 
     .range {
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
+
       input {
         width: 100%;
       }
@@ -141,20 +144,7 @@
       );
     }
   }
-  /* .slider-wrapper {
-      display: flex;
-      flex-direction: column;
-      justify-content: stretch;
-      .hue-preview {
-        height: 1rem;
-        border-radius: 0.25rem;
-        background: linear-gradient(
-          to right in oklch longer hue,
-          oklch(0.6 0.2 0) 0%,
-          oklch(0.6 0.2 360)
-        );
-      }
-    } */
+
   .formats {
     span {
       display: inline-flex;

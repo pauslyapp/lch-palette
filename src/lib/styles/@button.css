@@ -8,6 +8,8 @@
   align-items: center;
   gap: 0.5rem;
 
+  filter: saturate(0.75);
+
   &:hover:not(:disabled) {
     background-color: color-mix(in oklab, var(--color-bg), var(--color-bg-secondary));
   }

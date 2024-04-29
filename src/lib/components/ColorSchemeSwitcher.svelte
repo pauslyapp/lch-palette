@@ -1,22 +1,17 @@
 <script lang="ts">
-  // import { createTestPalettes } from '$lib/palette/test'
+  import { getPaletteContext } from '$lib/palette/context.svelte'
 
-  const key = 'color-scheme'
-
-  type ColorScheme = 'light' | 'dark'
-
-  let scheme = $state<ColorScheme>((window.localStorage.getItem(key) as ColorScheme) || 'light')
+  const { settings } = getPaletteContext()
 
   const toggleColorScheme = () => {
-    scheme = scheme === 'light' ? 'dark' : 'light'
+    settings.colorScheme = settings.colorScheme === 'light' ? 'dark' : 'light'
   }
 
   $effect(() => {
-    document.documentElement.dataset['scheme'] = scheme
-    window.localStorage.setItem(key, scheme)
+    document.documentElement.dataset['scheme'] = settings.colorScheme
   })
 </script>
 
 <button class="@button" onclick={() => toggleColorScheme()}
-  >{scheme === 'light' ? '🌚 Dark mode' : '🌞 Light mode'}</button
+  >{settings.colorScheme === 'light' ? '🌚 Dark mode' : '🌞 Light mode'}</button
 >

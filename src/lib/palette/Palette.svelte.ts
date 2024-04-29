@@ -30,6 +30,18 @@ export class Palette {
   }
 
   static fromColors(name: string, color: string[], colorCount: number) {
+    const definedColors = createDefinedColors(color, colorCount)
+    // Check if any of the defined colors have the same index
+    const duplicateIndex = definedColors.some(([index], i) =>
+      definedColors.some(([index2], i2) => i !== i2 && index === index2),
+    )
+
+    if (duplicateIndex) {
+      throw new Error(
+        'At least two of your colors were too similar. Unable to create a useful gradient.',
+      )
+    }
+
     return new Palette(name, createDefinedColors(color, colorCount), colorCount)
   }
 

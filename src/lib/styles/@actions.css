@@ -3,4 +3,13 @@
   gap: 0.5rem;
   align-items: center;
   flex-wrap: wrap;
+  margin-block: 0.25rem;
+
+  &.\+centered {
+    justify-content: center;
+  }
+
+  .\@\@spacer {
+    flex: 1;
+  }
 }

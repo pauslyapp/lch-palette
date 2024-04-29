@@ -20,6 +20,17 @@ select {
     'Apple Color Emoji';
 }
 
+input {
+  &[type='text'],
+  &[type='number'] {
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    padding: 0 0.25rem;
+    height: 2.25rem;
+    background: var(--color-bg);
+  }
+}
+
 hr {
   margin-block: 5rem;
   border: none;
@@ -43,4 +54,8 @@ h2 {
 }
 h3 {
   font-size: 1.25rem;
+}
+
+.error {
+  color: red;
 }

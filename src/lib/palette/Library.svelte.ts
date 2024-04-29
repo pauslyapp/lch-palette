@@ -3,7 +3,7 @@ import { replaceState } from '$app/navigation'
 import { page } from '$app/stores'
 import { get } from 'svelte/store'
 import { Palette, serializedPaletteSchema, type SerializedPalette } from './Palette.svelte'
-import { debounce } from 'lodash-es'
+import { cloneDeep, debounce } from 'lodash-es'
 
 export class Library {
   palettes: Palette[] = $state([])
@@ -86,7 +86,11 @@ export class Library {
     this.palettes.splice(
       this.palettes.indexOf(palette) + 1,
       0,
-      new Palette(palette.name, palette.definedColors, palette.colorCount),
+      new Palette(
+        palette.name,
+        cloneDeep($state.snapshot(palette.definedColors)),
+        palette.colorCount,
+      ),
     )
   }
 }
