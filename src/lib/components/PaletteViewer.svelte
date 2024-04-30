@@ -42,9 +42,12 @@
     <div class="@actions">
       <input type="text" bind:value={palette.name} />
       <div class="@@spacer"></div>
-      <button class="@button" onclick={() => library.duplicatePalette(palette)}>Duplicate 👯</button
-      >
-      <button class="@button" onclick={() => library.removePalette(palette)}>Remove 🛑</button>
+      <div class="palette-actions @actions">
+        <button class="@button" onclick={() => library.duplicatePalette(palette)}
+          >Duplicate 👯</button
+        >
+        <button class="@button" onclick={() => library.removePalette(palette)}>Remove 🛑</button>
+      </div>
     </div>
   </header>
   <div class="swatches">
@@ -87,11 +90,12 @@
     margin-block: 2rem 0.5rem;
   }
 
-  .palette-name {
-    position: absolute;
-    top: 0.5rem;
-    left: 0;
-    font-weight: bold;
-    font-size: 0.875rem;
+  @media (hover: hover) {
+    .palette-actions {
+      opacity: 0;
+      .palette:hover & {
+        opacity: 1;
+      }
+    }
   }
 </style>

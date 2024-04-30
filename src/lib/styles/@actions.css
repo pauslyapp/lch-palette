@@ -12,4 +12,8 @@
   .\@\@spacer {
     flex: 1;
   }
+
+  > .\@actions {
+    margin-block: 0;
+  }
 }
