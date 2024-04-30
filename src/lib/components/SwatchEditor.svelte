@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Swatch } from '$lib/palette/Swatch.svelte'
   import { formatLch } from '$lib/palette/utils'
-  import { formatHex, oklch } from 'culori'
+  import { formatHex, oklch, type Oklch } from 'culori'
 
   const { swatch }: { swatch: Swatch } = $props()
 
@@ -38,21 +38,45 @@
         <span>Lightness</span>
         <input type="number" bind:value={swatch.color.l} />
         <div class="range">
-          <input type="range" min="0" max="1" step="0.001" bind:value={swatch.color.l} />
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.001"
+            value={swatch.color.l}
+            oninput={({ currentTarget }) =>
+              swatch.updateColor({ l: parseFloat(currentTarget.value) })}
+          />
         </div>
       </div>
       <div class="value chroma">
         <span>Chroma</span>
         <input type="number" bind:value={swatch.color.c} />
         <div class="range">
-          <input type="range" min="0" max="0.3" step="0.001" bind:value={swatch.color.c} />
+          <input
+            type="range"
+            min="0"
+            max="0.3"
+            step="0.001"
+            value={swatch.color.c}
+            oninput={({ currentTarget }) =>
+              swatch.updateColor({ c: parseFloat(currentTarget.value) })}
+          />
         </div>
       </div>
       <div class="value hue">
         <span>Hue</span>
         <input type="number" bind:value={swatch.color.h} />
         <div class="range">
-          <input type="range" min="0" max="360" step="0.01" bind:value={swatch.color.h} />
+          <input
+            type="range"
+            min="0"
+            max="360"
+            step="0.01"
+            value={swatch.color.h}
+            oninput={({ currentTarget }) =>
+              swatch.updateColor({ h: parseFloat(currentTarget.value) })}
+          />
         </div>
       </div>
     </div>

@@ -37,6 +37,12 @@ export class Swatch {
     this.color = color
   }
 
+  updateColor({ l, c, h }: { l?: number; c?: number; h?: number }) {
+    if (l !== undefined) this.color.l = l
+    if (c !== undefined) this.color.c = c
+    if (h !== undefined) this.color.h = h
+  }
+
   remove() {
     this.#palette.removeColor(this.index)
   }
