@@ -13,12 +13,12 @@
     <summary>How do I save or share palettes?</summary>
 
     <p>
-      Whenever you make a change to a palette, the changes are saved in the URL. So you can bookmark
-      the page when you have a palette you like, or share the URL with others.
+      Whenever you make a change to a palette, the changes are reflected in the URL. So you can
+      bookmark the page when you have a palette you like, or share the URL with others.
     </p>
   </details>
   <details>
-    <summary>Should I specify more than one color in a single palette?</summary>
+    <summary>Should I specify / pin more than one color in a single palette?</summary>
 
     <p>
       Generally, it's better to specify fewer colors, so in most cases <em>one</em> color is perfect.

@@ -81,13 +81,6 @@ export const createPalette = (definedColors: DefinedColor[], colorCount: number)
 
   const idealLightnessCurve = getIdealLigthnessCurve(colorCount)
 
-  console.log(
-    idealLightnessCurve.getPointAt(0)[1],
-    idealLightnessCurve.getPointAt(1 / (colorCount - 1))[1],
-    idealLightnessCurve.getPointAt((colorCount - 2) / (colorCount - 1))[1],
-    idealLightnessCurve.getPointAt((colorCount - 1) / (colorCount - 1))[1],
-  )
-
   if (!isFirstDefined) {
     lightnessPoints.unshift(
       [0, idealLightnessCurve.getPointAt(0)[1]],
@@ -102,7 +95,6 @@ export const createPalette = (definedColors: DefinedColor[], colorCount: number)
     )
     huePoints.push([lastIndex, lastDefined.h!])
   }
-  console.log(lightnessPoints)
 
   const hueInterpolator = new CurveInterpolator(huePoints, {
     tension: 0.0,

@@ -29,8 +29,8 @@ export class Palette {
     this.colorCount = colorCount
   }
 
-  static fromColors(name: string, color: string[], colorCount: number) {
-    const definedColors = createDefinedColors(color, colorCount)
+  static fromColors(name: string, colors: string[], colorCount: number) {
+    const definedColors = createDefinedColors([...new Set(colors)], colorCount)
     // Check if any of the defined colors have the same index
     const duplicateIndex = definedColors.some(([index], i) =>
       definedColors.some(([index2], i2) => i !== i2 && index === index2),
@@ -42,7 +42,7 @@ export class Palette {
       )
     }
 
-    return new Palette(name, createDefinedColors(color, colorCount), colorCount)
+    return new Palette(name, createDefinedColors(colors, colorCount), colorCount)
   }
 
   defineColor(index: number, color: Oklch) {

@@ -7,7 +7,7 @@
 
   const library = $derived(context.library)
 
-  const INITIAL_COLORS = ['#3b82f6', '', '']
+  const INITIAL_COLORS = ['#3b82f6']
 
   let newPalette = $state({
     name: 'blue',
@@ -35,6 +35,8 @@
       error = `${e}`
     }
   }
+
+  let colorCount = $derived(newPalette.colors.length)
 </script>
 
 <form class="new-palette" action="#" {onsubmit}>
@@ -55,7 +57,7 @@
     <input type="number" min="5" max="20" step="1" bind:value={newPalette.count} />
   </label>
   <label>
-    <span>Colors<br /><small>Add up to three colors for a single palette.</small></span>
+    <span>Color{colorCount === 1 ? '' : 's'}</span>
     <div>
       {#each newPalette.colors as _, i}
         <div class="color-input">
@@ -65,25 +67,35 @@
             oninput={(e) => (newPalette.colors[i] = e.currentTarget.value)}
             value={formatHex(parse(newPalette.colors[i]))}
           />
+          {#if colorCount > 1}
+            <button type="button" class="@button" onclick={() => newPalette.colors.splice(i, 1)}>
+              ✖️
+            </button>
+          {/if}
         </div>
       {/each}
+      <button
+        type="button"
+        class="@button +small"
+        onclick={() => newPalette.colors.push(newPalette.colors.at(-1)!)}>Add color</button
+      >
     </div>
   </label>
 
-  <div class="@actions">
-    <button disabled={!canSubmit} class="@button" type="submit">Add palette +</button>
+  <div class="@actions +centered">
+    <button disabled={!canSubmit} class="@button +large" type="submit">Add palette +</button>
   </div>
 </form>
 
 <style lang="postcss">
   form {
-    display: grid;
-    place-content: center;
+    display: flex;
+    flex-direction: column;
     border: 1px solid var(--color-border);
     background-color: var(--color-bg-tertiary);
     margin-inline: auto;
     border-radius: 0.5rem;
-    width: 30rem;
+    width: 28rem;
     max-width: 100%;
     padding: 1.5rem 2rem;
     gap: 1rem;
@@ -95,17 +107,22 @@
     label {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
-      align-items: center;
+      column-gap: 1.5rem;
+      row-gap: 0.5rem;
+      align-items: top;
       margin-bottom: 0.5rem;
+      width: 100%;
+
       span {
-        width: 10rem;
+        padding-top: 0.25rem;
+        width: 7rem;
       }
     }
     .color-input {
       display: flex;
       align-items: center;
       gap: 0.25rem;
+      margin-bottom: 0.25rem;
       input[type='text'] {
         width: 14ch;
       }

@@ -13,4 +13,16 @@
   &:hover:not(:disabled) {
     background-color: color-mix(in oklab, var(--color-bg), var(--color-bg-secondary));
   }
+
+  &.\+small {
+    font-size: 0.875rem;
+    height: 2rem;
+    padding-inline: 0.25rem;
+  }
+  &.\+large {
+    font-size: 1.125rem;
+    height: 2.5rem;
+    padding-inline: 0.75rem;
+    font-weight: 500;
+  }
 }
