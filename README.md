@@ -6,6 +6,8 @@ create and save gradient palettes to be used in UI design.
 View and use here:
 https://palette.pausly.app/
 
+<a href="https://palette.pausly.app/"><img width="970" alt="image" src="https://github.com/pauslyapp/lch-palette/assets/133277/c4787744-4387-465c-b1df-726c59d04e77"></a>
+
 ## Developing
 
 ```bash
